@@ -12,6 +12,8 @@ django==4.2.3
     #   djangorestframework
 djangorestframework==3.14.0
     # via -r requirements.in
+pillow==10.0.0
+    # via -r requirements.in
 pytz==2023.3
     # via djangorestframework
 sqlparse==0.4.4
