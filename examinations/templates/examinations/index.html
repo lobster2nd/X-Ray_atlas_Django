@@ -1,4 +1,5 @@
 {% extends 'examinations/base.html' %}
+{% loadstatic %}
 {% block content %}
 <ul>
     <li>Голова</li>
@@ -6,5 +7,13 @@
     <li>Пояс верхней конечности</li>
     <li>Пояс нижней конечности</li>
     <li>Другие неконтрастные методы исследования</li>
+</ul>
+<ul>
+    {% for e in exams %}
+    <li>
+        <h2>{{e.title}}</h2>
+        <p>{{e.content}}</p>
+    </li>
+    {% endfor %}
 </ul>
 {% endblock %}

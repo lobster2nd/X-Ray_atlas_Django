@@ -4,7 +4,8 @@ from .models import *
 
 
 def index(request):
-    return render(request, 'examinations/index.html', {'title': 'Главная страница'})
+    exams = Examinations.objects.all()
+    return render(request, 'examinations/index.html', {'title': 'Главная страница', 'exams': exams})
 
 
 def body_part(request, part):
