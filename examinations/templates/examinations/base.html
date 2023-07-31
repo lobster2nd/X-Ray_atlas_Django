@@ -1,14 +1,37 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Атлас укладок</title>
+    <link type="text/css" href="{% static 'examinations/css/index.css' %}" rel="stylesheet" />
 </head>
 <body>
 {% block header %}
-<h1>Атлас укладок при рентгенологических исследованиях</h1>
-<h2>А.Н.Кишковский, Л.А.Тютин, Г.Н.Есиновская</h2>
+<div class="header">
+    <h1>Атлас укладок при рентгенологических исследованиях</h1>
+    <h2>А.Н.Кишковский, Л.А.Тютин, Г.Н.Есиновская</h2>
+</div>
 {% endblock header %}
+{% block buttons %}
+<div class="buttonContainer">
+    <form action="/head.html">
+        <button class="button-arounder" id="head">Голова</button>
+    </form>
+    <form action="/spine.html">
+        <button class="button-arounder" id="spine">Позвоночник</button>
+    </form>
+    <form action="/upper_limp.html">
+        <button class="button-arounder" id="upper_limp">Пояс верхней конечности</button>
+    </form>
+    <form action="/lower_limp.html">
+        <button class="button-arounder" id="lower_limp">Пояс нижней конечности</button>
+    </form>
+    <form action="/other.html">
+        <button class="button-arounder" id="other">Другие</button>
+    </form>
+</div>
+{% endblock %}
 {% block content %}
 {% endblock %}
 </body>

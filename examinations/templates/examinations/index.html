@@ -1,19 +1,6 @@
 {% extends 'examinations/base.html' %}
-{% loadstatic %}
 {% block content %}
-<ul>
-    <li>Голова</li>
-    <li>Позвоночник</li>
-    <li>Пояс верхней конечности</li>
-    <li>Пояс нижней конечности</li>
-    <li>Другие неконтрастные методы исследования</li>
-</ul>
-<ul>
-    {% for e in exams %}
-    <li>
-        <h2>{{e.title}}</h2>
-        <p>{{e.content}}</p>
-    </li>
-    {% endfor %}
-</ul>
+<div class="content">
+На данном ресурсе вы можете найти интересующее вас исследование с подробным описанием и иллюстрациями
+</div>
 {% endblock %}
