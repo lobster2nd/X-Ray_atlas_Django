@@ -3,4 +3,14 @@
 <div class="content">
 На данном ресурсе вы можете найти интересующее вас исследование с подробным описанием и иллюстрациями
 </div>
+<div>
+    <ul>
+    {% for e in exams %}
+        <li>
+            <h2>{{ e.title }}</h2>
+            <p>{{ e.content|linebreaks|truncatewords:75 }}</p>
+            <p><a href="#">Подробнее</a></p>
+        </li>
+    {% endfor %}
+    </ul>
 {% endblock %}
