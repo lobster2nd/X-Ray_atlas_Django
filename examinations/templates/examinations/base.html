@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Атлас укладок</title>
+    <title>{{ title }}</title>
     <link type="text/css" href="{% static 'examinations/css/index.css' %}" rel="stylesheet" />
 </head>
 <body>
@@ -15,24 +15,9 @@
 {% endblock header %}
 {% block buttons %}
 <div class="buttonContainer">
-    <form action="/head.html">
-        <button class="button-arounder" id="head">Голова</button>
-    </form>
-    <form action="/spine.html">
-        <button class="button-arounder" id="spine">Позвоночник</button>
-    </form>
-    <form action="/upper_limp.html">
-        <button class="button-arounder" id="upper_limp">Пояс верхней конечности</button>
-    </form>
-    <form action="/lower_limp.html">
-        <button class="button-arounder" id="lower_limp">Пояс нижней конечности</button>
-    </form>
-    <form action="/other.html">
-        <button class="button-arounder" id="chest">Грудь</button>
-    </form>
-    <form action="/other.html">
-        <button class="button-arounder" id="stomach">Живот</button>
-    </form>
+    {% for c in cats %}
+        <button class="button-arounder"><a href="{{ c.get_absolute_url }}">{{ c.name }}</a></button>
+    {% endfor %}
 </div>
 {% endblock %}
 {% block content %}

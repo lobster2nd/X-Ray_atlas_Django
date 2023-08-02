@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Examinations(models.Model):
@@ -15,10 +16,14 @@ class Examinations(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('exam', kwargs={'exam_id': self.pk})
+
     class Meta:
         verbose_name = 'Исследования'
         verbose_name_plural = 'Исследования'
         ordering = ['title']
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100, db_index=True, verbose_name='Категория')
@@ -26,6 +31,9 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'cat_id': self.pk})
 
     class Meta:
         verbose_name = 'Категория'

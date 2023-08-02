@@ -8,8 +8,9 @@
     {% for e in exams %}
         <li>
             <h2>{{ e.title }}</h2>
+            <p>Область исследования: {{e.cat}} </p>
             <p>{{ e.content|linebreaks|truncatewords:75 }}</p>
-            <p><a href="#">Подробнее</a></p>
+            <p><a href="{{ e.get_absolute_url }}">Подробнее</a></p>
         </li>
     {% endfor %}
     </ul>
