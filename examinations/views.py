@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from .models import *
 
@@ -15,19 +15,29 @@ def index(request):
     return render(request, 'examinations/index.html', context=context)
 
 
-def show_exam(request, exam_id):
-    return HttpResponse(f'{exam_id}')
-
-
-def show_category(request, cat_id):
-    exams = Examinations.objects.filter(cat_id=cat_id)
+def show_exam(request, exam_slug):
+    exam =get_object_or_404(Examinations, slug=exam_slug)
     cats = Category.objects.all()
 
-    if len(exams) == 0:
-        raise Http404()
+    context = {
+        'title': exam.title,
+        'exam': exam,
+        'cats': cats,
+    }
+
+    return render(request, 'examinations/exam.html', context=context)
+
+
+def show_category(request, cat_slug):
+    cat = Category.objects.filter(slug=cat_slug)
+    exams = Examinations.objects.filter(cat_id=cat[0].id)
+    cats = Category.objects.all()
+
+    #if len(exams) == 0:
+    #    raise Http404()
 
     context = {
-        'title': 'Категория',
+        'title': cat_slug,
         'exams': exams,
         'cats': cats,
     }

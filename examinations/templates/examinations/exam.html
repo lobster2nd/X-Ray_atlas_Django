@@ -1,0 +1,11 @@
+{% extends 'examinations/base.html' %}
+
+{% block content %}
+<h1>{{exam.title}}</h1>
+
+{% if exam.image %}
+<p><img src="{{exam.image.url}}"</p>
+{% endif %}
+
+{{exam.content|linebreaks}}
+{% endblock %}
