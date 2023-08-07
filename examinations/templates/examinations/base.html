@@ -15,6 +15,11 @@
 {% endblock header %}
 {% block buttons %}
 <div class="buttonContainer">
+    {% for m in menu %}
+        <a class="rainbow-button" href='#'>{{m}}</a>
+    {% endfor %}
+</div>
+<div class="buttonContainer">
     {% for c in cats %}
         <button class="button-arounder"><a href="{{ c.get_absolute_url }}">{{ c.name }}</a></button>
     {% endfor %}
