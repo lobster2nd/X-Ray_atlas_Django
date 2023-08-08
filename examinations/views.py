@@ -1,52 +1,62 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.urls import reverse
+from django.views.generic import ListView, DetailView, CreateView
+
 from .models import *
 
-menu = ['Главная', 'Открыть атлас', 'Добавить статью', 'Обратная связь', 'Войти']
-
-def index(request):
-    exams = Examinations.objects.all()
-    cats = Category.objects.all()
-
-    context = {
-        'menu': menu,
-        'title': 'Главная страница',
-        'exams': exams,
-        'cats': cats
-    }
-    return render(request, 'examinations/index.html', context=context)
+menu = [{'title': 'Главная', 'url_name': 'home'},
+        {'title': 'Открыть атлас', 'url_name': 'atlas'},
+        {'title':'Добавить статью', 'url_name': 'add_page'},
+        {'title': 'Обратная связь', 'url_name': 'contact'},
+        {'title': 'Войти', 'url_name': 'login'}
+    ]
 
 
-def show_exam(request, exam_slug):
-    exam =get_object_or_404(Examinations, slug=exam_slug)
-    cats = Category.objects.all()
+class ExaminationsHome(ListView):
+    model = Examinations
+    template_name = 'examinations/index.html'
+    context_object_name = 'exams'
 
-    context = {
-        'menu': menu,
-        'title': exam.title,
-        'exam': exam,
-        'cats': cats,
-    }
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        context['title'] = 'Главная страница'
+        context['cats'] = Category.objects.all()
+        return context
 
-    return render(request, 'examinations/exam.html', context=context)
+    def get_queryset(self):
+        return Examinations.objects.filter(is_published=True)
 
 
-def show_category(request, cat_slug):
-    cat = Category.objects.filter(slug=cat_slug)
-    exams = Examinations.objects.filter(cat_id=cat[0].id)
-    cats = Category.objects.all()
+class ShowExam(DetailView):
+    model = Examinations
+    template_name = 'examinations/exam.html'
+    slug_url_kwarg = 'exam_slug'
+    context_object_name = 'exam'
 
-    if len(exams) == 0:
-        raise Http404()
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        context['title'] = context['exam']
+        context['cats'] = Category.objects.all()
+        return context
 
-    context = {
-        'menu': menu,
-        'title': cat_slug,
-        'exams': exams,
-        'cats': cats,
-    }
-    return render(request, 'examinations/index.html', context=context)
+
+class ExaminationsCategory(ListView):
+    model = Examinations
+    template_name = 'examinations/index.html'
+    context_object_name = 'exams'
+    allow_empty = False
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        context['title'] = str(context['exams'][0].cat)
+        context['cats'] = Category.objects.all()
+        return context
+
+    def get_queryset(self):
+        return Examinations.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True)
 
 
 
