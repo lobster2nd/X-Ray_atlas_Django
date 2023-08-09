@@ -1,15 +1,16 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.views.generic import ListView, DetailView, CreateView
 
 from .models import *
+from .forms import AddExamForm
 
-menu = [{'title': 'Главная', 'url_name': 'home'},
+menu = [{'title': 'Главная', 'url_name': ''},
         {'title': 'Открыть атлас', 'url_name': 'atlas'},
-        {'title':'Добавить статью', 'url_name': 'add_page'},
+        {'title': 'Добавить статью', 'url_name': 'addpage'},
         {'title': 'Обратная связь', 'url_name': 'contact'},
         {'title': 'Войти', 'url_name': 'login'}
-    ]
+        ]
 
 
 class ExaminationsHome(ListView):
@@ -58,6 +59,20 @@ class ExaminationsCategory(ListView):
     def get_queryset(self):
         return Examinations.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True)
 
+
+def addpage(request):
+    if request.method == 'POST':
+        form = AddExamForm(request.POST)
+        if form.is_valid():
+            try:
+                Examinations.objects.create(**form.cleaned_data)
+                return redirect('home')
+            except:
+                form.add_error(None, 'Ошибка добавления исследования')
+
+    else:
+        form = AddExamForm()
+    return render(request, 'examinations/addpage.html', {'form': form})
 
 
 def pageNotFound(request, exception):
