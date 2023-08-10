@@ -11,7 +11,7 @@ class Examinations(models.Model):
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     time_update = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
-    cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, blank=True, verbose_name='Область исследования')
+    cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, blank=False, verbose_name='Область исследования')
 
     def __str__(self):
         return self.title
