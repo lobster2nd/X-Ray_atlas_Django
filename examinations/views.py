@@ -2,35 +2,28 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import *
 from .forms import AddExamForm
-
-menu = [{'title': 'Главная', 'url_name': 'home'},
-        {'title': 'Открыть атлас', 'url_name': 'atlas'},
-        {'title': 'Добавить статью', 'url_name': 'addpage'},
-        {'title': 'Обратная связь', 'url_name': 'contact'},
-        {'title': 'Войти', 'url_name': 'login'}
-    ]
+from .utils import *
 
 
-class ExaminationsHome(ListView):
+class ExaminationsHome(DataMixin, ListView):
     model = Examinations
     template_name = 'examinations/index.html'
     context_object_name = 'exams'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = 'Главная страница'
-        context['cats'] = Category.objects.all()
-        return context
+        c_def = self.get_user_context(title='Главная страница')
+        return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
         return Examinations.objects.filter(is_published=True)
 
 
-class ShowExam(DetailView):
+class ShowExam(DataMixin, DetailView):
     model = Examinations
     template_name = 'examinations/exam.html'
     slug_url_kwarg = 'exam_slug'
@@ -38,13 +31,11 @@ class ShowExam(DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = context['exam']
-        context['cats'] = Category.objects.all()
-        return context
+        c_def = self.get_user_context(title=context['exam'])
+        return dict(list(context.items()) + list(c_def.items()))
 
 
-class ExaminationsCategory(ListView):
+class ExaminationsCategory(DataMixin, ListView):
     model = Examinations
     template_name = 'examinations/index.html'
     context_object_name = 'exams'
@@ -52,26 +43,24 @@ class ExaminationsCategory(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = str(context['exams'][0].cat)
-        context['cats'] = Category.objects.all()
-        return context
+        c_def = self.get_user_context(title=str(context['exams'][0].cat))
+        return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
         return Examinations.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True)
 
 
-class AddPage(CreateView):
+class AddPage(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddExamForm
     template_name = 'examinations/addpage.html'
     success_url = reverse_lazy('home')
+    login_url = reverse_lazy('home')
+    raise_exception = True
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['cats'] = Category.objects.all()
-        context['menu'] = menu
-        context['title'] = 'Добавление исследования'
-        return context
+        c_def = self.get_user_context(title='Добавление исследования')
+        return dict(list(context.items()) + list(c_def.items()))
 
 
 def atlas(request):

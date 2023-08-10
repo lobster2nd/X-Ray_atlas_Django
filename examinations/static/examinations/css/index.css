@@ -25,7 +25,7 @@ body {
 .buttonContainer {
   display: flex;
   justify-content: center;
-  margin: 20px;
+  margin: 10px;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
@@ -38,7 +38,7 @@ button {
 }
 
 .button-arounder {
-  font-size: 2rem;
+  font-size: 1.5rem;
   background: hsl(190deg, 30%, 15%);
   color: hsl(190deg, 10%, 95%);
 

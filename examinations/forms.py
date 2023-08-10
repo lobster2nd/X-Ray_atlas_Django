@@ -1,5 +1,5 @@
 from django import forms
-from rest_framework.exceptions import ValidationError
+from django.core.exceptions import ValidationError
 
 from .models import *
 
