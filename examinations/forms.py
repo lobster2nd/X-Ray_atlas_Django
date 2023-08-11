@@ -1,5 +1,7 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 from .models import *
 
@@ -22,3 +24,14 @@ class AddExamForm(forms.ModelForm):
         if len(title) > 200:
             raise ValidationError('Длина превышает 200 символов')
         return title
+
+
+class RegisterUserForm(UserCreationForm):
+    username = forms.CharField(label='Логин', widget=forms.TextInput())
+    email = forms.EmailField(label='Email', widget=forms.EmailInput())
+    password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput())
+    password2 = forms.CharField(label='Повтор пароля', widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2')
