@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 
 from .models import *
-from .forms import AddExamForm, RegisterUserForm
+from .forms import *
 from .utils import *
 
 
