@@ -18,8 +18,13 @@
     {% for m in menu %}
         <a class="rainbow-button" href="{% url m.url_name %}">{{m.title}}</a>
     {% endfor %}
+    {% if request.user.is_authenticated %}
+        <a class="rainbow-button" href="#">{{ user.username }}</a>
+        <a class="rainbow-button" href="{% url 'logout' %}">Выйти</a>
+    {% else %}
         <a class="rainbow-button" href="{% url 'register' %}">Регистрация</a>
         <a class="rainbow-button" href="{% url 'login' %}">Вход</a>
+    {% endif %}
 </div>
 <div class="buttonContainer">
     {% for c in cats %}
