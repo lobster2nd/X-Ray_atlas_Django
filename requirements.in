@@ -3,3 +3,4 @@ djangorestframework
 Pillow
 django-debug-toolbar
 django-simple-captcha
+social-auth-app-django

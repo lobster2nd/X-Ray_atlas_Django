@@ -24,8 +24,11 @@ from examinations.views import pageNotFound
 urlpatterns = [
     path('captcha/', include('captcha.urls')),
     path('admin/', admin.site.urls),
-    path('', include('examinations.urls'))
+    path('', include('examinations.urls')),
+    path('social_auth/', include('social_django.urls', namespace='social')),
 ]
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 if settings.DEBUG:
     import debug_toolbar

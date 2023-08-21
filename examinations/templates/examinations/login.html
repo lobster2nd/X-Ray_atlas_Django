@@ -11,5 +11,10 @@
     <div class="form-error">{{ f.errors }}</div>
   {% endfor %}
   <button type="submit">Войти</button>
+  <p>Или</p>
+  <a href="{% url 'social:begin' 'vk-oauth2' %}">Войти через VK</a><br>
+  <a href="{% url 'social:begin' 'github' %}">Войти через GitHub</a><br>
+  <a href="{% url 'social:begin' 'yandex-oauth2' %}">Войти через Яндекс</a><br>
+  <!--<a href="{% url 'social:begin' 'mailru' %}">Войти через mailru</a>-->
 </form>
 {% endblock %}
