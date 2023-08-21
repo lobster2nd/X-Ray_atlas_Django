@@ -16,7 +16,8 @@ class AddExamForm(forms.ModelForm):
         model = Examinations
         fields = ['cat', 'title', 'slug', 'content', 'image', 'video_link']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-input'}),
+            'title': forms.TextInput(attrs={'class': 'form-input', 'id': 'id_title'}),
+            'slug': forms.TextInput(attrs={'class': 'form-input', 'id': 'id_slug'}),
             'content': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
         }
 
@@ -47,4 +48,4 @@ class ContactForm(forms.Form):
     name = forms.CharField(label='Имя', max_length=255)
     email = forms.EmailField(label='Email')
     content = forms.CharField(label='Сообщение', widget=forms.Textarea(attrs={'cols': 60, 'rows': 10}))
-    captcha = CaptchaField()
+    captcha = CaptchaField(label='Введите символы с картинки')
