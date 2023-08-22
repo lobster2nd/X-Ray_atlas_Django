@@ -10,7 +10,7 @@ class ExaminationsAdmin(admin.ModelAdmin):
     search_fields = ('title', 'content')
     prepopulated_fields = {"slug": ("title",)}
     fields = ('title', 'slug', 'cat', 'content', 'image', 'get_html_image', 'is_published',)
-    readonly_fields = ('time_create', 'time_update', 'get_html_image')
+    readonly_fields = ('time_create', 'time_update', 'get_html_image', )
 
     def get_html_image(self, object):
         if object.image:
