@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'social_django',
     'rest_framework',
     'apiv1.apps.Apiv1Config',
+    'rest_framework.authtoken',
+    'djoser',
 ]
 
 MIDDLEWARE = [
@@ -160,8 +162,15 @@ CAPTCHA_BACKGROUND_COLOR = "#A0A0A0"
 CAPTCHA_FOREGROUND_COLOR = 'red'
 
 REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100,
     'DEFAULT_RENDER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+            'rest_framework.authentication.TokenAuthentication',
+            'rest_framework.authentication.BasicAuthentication',
+            'rest_framework.authentication.SessionAuthentication',
+    ),
 }
