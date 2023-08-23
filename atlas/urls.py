@@ -16,16 +16,24 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 from atlas import settings
 from examinations.views import pageNotFound
+from apiv1.views import ExaminationsAPIList, ExaminationsAPIUpdate, ExaminationsAPIDestroy
+
 
 urlpatterns = [
     path('captcha/', include('captcha.urls')),
     path('admin/', admin.site.urls),
     path('', include('examinations.urls')),
     path('social_auth/', include('social_django.urls', namespace='social')),
+    path('api/v1/examinations/', ExaminationsAPIList.as_view()),
+    path('api/v1/examinations/<int:pk>/', ExaminationsAPIUpdate.as_view()),
+    path('api/v1/examinationdelete/<int:pk>/', ExaminationsAPIDestroy.as_view()),
+    path('api/v1/drf-auth/', include('rest_framework.urls')),   # session-based authentication
+    path('api/v1/auth/', include('djoser.urls')),                   # token-based authentication
+    re_path(r'^auth/', include('djoser.urls.authtoken')),           # token-based authentication
 ]
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
