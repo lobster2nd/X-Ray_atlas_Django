@@ -24,11 +24,11 @@ from apiv1.views import ExaminationsAPIList, ExaminationsAPIUpdate, Examinations
 
 
 urlpatterns = [
-    path('captcha/', include('captcha.urls')),
     path('admin/', admin.site.urls),
     path('', include('examinations.urls')),
-    path('social_auth/', include('social_django.urls', namespace='social')),
     path('api/v1/', include('apiv1.urls')),
+    path('social_auth/', include('social_django.urls', namespace='social')),
+    path('captcha/', include('captcha.urls')),
 ]
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
