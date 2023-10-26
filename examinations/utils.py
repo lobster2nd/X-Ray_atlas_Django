@@ -4,11 +4,12 @@ menu = [{'title': 'Главная', 'url_name': 'home'},
         {'title': 'Открыть атлас', 'url_name': 'atlas'},
         {'title': 'Добавить статью', 'url_name': 'addpage'},
         {'title': 'Обратная связь', 'url_name': 'contact'},
-    ]
+        ]
 
 
 class DataMixin:
     paginate_by = 3
+
     def get_user_context(self, **kwargs):
         context = kwargs
         cats = Category.objects.all()

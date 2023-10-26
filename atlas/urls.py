@@ -28,9 +28,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('examinations.urls')),
     path('social_auth/', include('social_django.urls', namespace='social')),
-    # path('api/v1/examinations/', ExaminationsAPIList.as_view()),
-    # path('api/v1/examinations/<int:pk>/', ExaminationsAPIUpdate.as_view()),
-    # path('api/v1/examinationdelete/<int:pk>/', ExaminationsAPIDestroy.as_view()),
+    path('api/v1/examinations/', ExaminationsAPIList.as_view()),
+    path('api/v1/examinations/<int:pk>/', ExaminationsAPIUpdate.as_view()),
+    path('api/v1/examinationdelete/<int:pk>/', ExaminationsAPIDestroy.as_view()),
     # path('api/v1/drf-auth/', include('rest_framework.urls')),   # session-based authentication
     # path('api/v1/auth/', include('djoser.urls')),                   # token-based authentication
     # re_path(r'^auth/', include('djoser.urls.authtoken')),           # token-based authentication

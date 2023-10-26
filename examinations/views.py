@@ -1,12 +1,15 @@
+import os
+
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, HttpResponseNotFound, Http404
+from django.http import HttpResponse, HttpResponseNotFound, FileResponse,  Http404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 
+from atlas import settings
 from .models import *
 from .forms import *
 from .utils import *
@@ -116,7 +119,8 @@ class ContactFormView(DataMixin, FormView):
 
 
 def atlas(request):
-    return HttpResponse("page for atlas")
+    filename = 'examinations/files/atlas.pdf'
+    return render(request, 'examinations/atlas_pdf.html', {'filename': filename})
 
 
 def contact(request):
